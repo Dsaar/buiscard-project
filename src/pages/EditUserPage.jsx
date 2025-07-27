@@ -21,7 +21,7 @@ function EditUserPage() {
 	if (!userData) return <CircularProgress />;
 
 	return (
-		<Container sx={{ mt: 5 }}>
+		<Container sx={{ mt: -2 }}>
 			<EditUserForm
 				userData={userData}
 				onSuccess={() => navigate('/profile')}
