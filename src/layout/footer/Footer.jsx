@@ -1,25 +1,83 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import NavLinkTemplate from '/src/components/NavLinkTemplate';
+import { Paper, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import ROUTES from '../../router/routesDictionary';
+import InfoIcon from '@mui/icons-material/Info';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import StyleIcon from '@mui/icons-material/Style';
+import { useCurrentUser } from '../../users/providers/UserProvider';
 
 function Footer() {
+  const navigate = useNavigate();
+  const { user } = useCurrentUser();
+  const theme = useTheme();
+
   return (
-    <Box
+    <Paper
       component="footer"
       sx={{
-        backgroundColor: '#1976d2',
-        color: 'white',
-        textAlign: 'center',
-        py: 2,
-        mt: 'auto',
+        position: 'sticky',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: theme.palette.mode === 'dark'
+          ? theme.palette.background.paper
+          : theme.palette.primary.main,
+        color: theme.palette.getContrastText(
+          theme.palette.mode === 'dark'
+            ? theme.palette.background.paper
+            : theme.palette.primary.main
+        ),
       }}
+      elevation={3}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-        <NavLinkTemplate to={ROUTES.root} label="Home" />
-        <NavLinkTemplate to={ROUTES.about} label="About" />
-      </Box>
-    </Box>
+      <BottomNavigation
+        sx={{
+          backgroundColor: 'inherit',
+          '& .MuiBottomNavigationAction-root': {
+            color: theme.palette.getContrastText(
+              theme.palette.mode === 'dark'
+                ? theme.palette.background.paper
+                : theme.palette.primary.main
+            ),
+          },
+        }}
+        showLabels
+      >
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeIcon />}
+          onClick={() => navigate(ROUTES.root)}
+        />
+        <BottomNavigationAction
+          label="About"
+          icon={<InfoIcon />}
+          onClick={() => navigate(ROUTES.about)}
+        />
+        <BottomNavigationAction
+          label="Cards"
+          icon={<StyleIcon />}
+          onClick={() => navigate(ROUTES.root)}
+        />
+        {user?.isBusiness && (
+          <BottomNavigationAction
+            label="My Cards"
+            icon={<RecentActorsIcon />}
+            onClick={() => navigate(ROUTES.myCards)}
+          />
+        )}
+        {user && (
+          <BottomNavigationAction
+            label="Favorites"
+            icon={<FavoriteIcon />}
+            onClick={() => navigate(ROUTES.favorite)}
+          />
+        )}
+      </BottomNavigation>
+    </Paper>
   );
 }
 
