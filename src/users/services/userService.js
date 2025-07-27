@@ -1,3 +1,7 @@
+import axios from "axios";
+import { getToken } from "./localStorageService";
+import ENDPOINTS from "../../api/endpoints";
+
 export const getUserById = async (userId) => {
 	const token = getToken();
 	if (!token) throw new Error("No token found");
@@ -5,7 +9,7 @@ export const getUserById = async (userId) => {
 	const response = await axios.get(
 		`${ENDPOINTS.users.all}/${userId}`,
 		{
-			headers: { 'x-auth-token': token },
+			headers: { "x-auth-token": token },
 		}
 	);
 	return response.data;

@@ -10,7 +10,8 @@ const ROUTES = {
 	editCard: "/edit-card/:id",
 	cardDetails: '/card/:id',
 	cardDetailsDynamic: (id) => `/card/${id}`,
-	profile: '/profile'
+	profile: '/profile',
+	profileEdit:'/edit-profile',
 
 
 };

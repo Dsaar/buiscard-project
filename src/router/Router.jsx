@@ -13,6 +13,7 @@ import CreateCardPage from "../pages/CreateCardPage";
 import EditCardPage from "../pages/EditCardPage";
 import CardDetailsPage from "../pages/CardDetailsPage";
 import UserProfilePage from "../pages/UserProfilePage";
+import EditUserPage from "../pages/EditUserPage";
 function Router() {
   return (
     <Routes>
@@ -27,6 +28,8 @@ function Router() {
       <Route path={ROUTES.editCard} element={<EditCardPage />} />
       <Route path="/card/:id" element={<CardDetailsPage />} />
       <Route path={ROUTES.profile} element={<UserProfilePage />} />
+      <Route path={ROUTES.profileEdit} element={<EditUserPage />} />
+      
 
 
       <Route path="/*" element={<ErrorPage />} />
