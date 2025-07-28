@@ -6,7 +6,7 @@ import { getToken } from '../../users/services/localStorageService';
 import ENDPOINTS from '../../api/endpoints';
 import { useSearchParams } from 'react-router-dom';
 import { useSnack } from '../../providers/SnackBarProvider';
-import { useDebounce } from '../../hooks/useDebounce';
+import  useDebounce  from '../../hooks/useDebounce';
 
 function CRMUsers() {
 	const [rows, setRows] = useState([]);
