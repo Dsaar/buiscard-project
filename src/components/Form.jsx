@@ -4,6 +4,7 @@ import FormButton from "./FormButton";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import LoopIcon from "@mui/icons-material/Loop";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const Form = ({
 	title = "",
@@ -16,6 +17,8 @@ const Form = ({
 	children,
 }) => {
 	const navigate = useNavigate();
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // detect mobile
 
 	return (
 		<Box
@@ -25,7 +28,7 @@ const Form = ({
 				mt: 2,
 				p: { xs: 2, sm: 4 },
 				width: "100%",
-				maxWidth: "900px",
+				maxWidth: isMobile ? "100%" : "900px", // full-width on mobile
 				...styles,
 			}}
 			onSubmit={onSubmit}
@@ -42,7 +45,7 @@ const Form = ({
 
 			<Grid container spacing={2} justifyContent="center" sx={{ mt: 3 }}>
 				<Grid item xs={12} sm={6}>
-					<Box sx={{ width: '400px', mx: 'auto' }}>
+					<Box sx={{ width: isMobile ? "100%" : "400px", mx: "auto" }}>
 						<FormButton
 							node="CANCEL"
 							color="error"
@@ -54,7 +57,7 @@ const Form = ({
 				</Grid>
 
 				<Grid item xs={12} sm={6}>
-					<Box sx={{ width: '400px', mx: 'auto' }}>
+					<Box sx={{ width: isMobile ? "100%" : "400px", mx: "auto" }}>
 						<FormButton
 							node={<LoopIcon />}
 							variant="outlined"
@@ -65,7 +68,7 @@ const Form = ({
 				</Grid>
 
 				<Grid item xs={12}>
-					<Box sx={{ width: '820px', mx: 'auto' }}>
+					<Box sx={{ width: isMobile ? "100%" : "820px", mx: "auto" }}>
 						<FormButton
 							node="SUBMIT"
 							onClick={onSubmit}
@@ -74,9 +77,7 @@ const Form = ({
 						/>
 					</Box>
 				</Grid>
-
 			</Grid>
-
 		</Box>
 	);
 };

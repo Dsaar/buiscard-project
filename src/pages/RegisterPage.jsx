@@ -1,5 +1,5 @@
 import React from 'react'
-import RegisterForm from '../users/components/RegisterForm'
+import RegisterForm from '../users/components/register/RegisterForm'
 import FormPageLayout from '../layout/FormPageLayout'
 
 
