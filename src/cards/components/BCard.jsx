@@ -4,7 +4,7 @@ import BCardFooter from "./BCardFooter";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routesDictionary";
 
-function BCard({ card, onDelete, toggleLike, isLiked }) {
+function BCard({ card, onDelete, toggleLike, isLiked, user }) {
 	const navigate = useNavigate();
 
 	const handleCardClick = () => {
@@ -34,6 +34,8 @@ function BCard({ card, onDelete, toggleLike, isLiked }) {
 				cardId={card._id}
 				bizNumber={card.bizNumber}
 				onDelete={onDelete}
+				user={user}
+				ownerId={card.user_id}
 			/>
 		</Card>
 	);

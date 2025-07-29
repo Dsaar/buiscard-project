@@ -20,7 +20,7 @@ import axios from 'axios';
 import { useSnack } from '../../providers/SnackBarProvider';
 import ENDPOINTS from '../../api/endpoints';
 
-function BCardFooter({ cardId, bizNumber, onDelete, toggleLike, isLiked }) {
+function BCardFooter({ cardId, bizNumber, onDelete, toggleLike, isLiked, user, ownerId }) {
 	const setSnack = useSnack();
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
@@ -48,20 +48,25 @@ function BCardFooter({ cardId, bizNumber, onDelete, toggleLike, isLiked }) {
 			setSnack('error', 'Failed to delete card');
 		}
 	};
+	const canEditOrDelete = user && (user.isAdmin || user._id === ownerId);
 
 	return (
 		<>
 			<CardActions sx={{ display: 'flex', justifyContent: 'space-between' }} disableSpacing>
 				<Box>
-					<IconButton onClick={(e) => handleConfirmOpen(e)}>
-						<DeleteIcon />
-					</IconButton>
-					<IconButton onClick={(e) => {
-						e.stopPropagation();
-						navigate(`/edit-card/${cardId}`);
-					}}>
-						<EditIcon />
-					</IconButton>
+					{canEditOrDelete && (
+						<>
+							<IconButton onClick={(e) => handleConfirmOpen(e)}>
+								<DeleteIcon />
+							</IconButton>
+							<IconButton onClick={(e) => {
+								e.stopPropagation();
+								navigate(`/edit-card/${cardId}`);
+							}}>
+								<EditIcon />
+							</IconButton>
+						</>
+					)}
 				</Box>
 				<Box>
 					<IconButton onClick={(e) => {
@@ -70,12 +75,14 @@ function BCardFooter({ cardId, bizNumber, onDelete, toggleLike, isLiked }) {
 					}}>
 						<CallIcon />
 					</IconButton>
-					<IconButton onClick={(e) => {
-						e.stopPropagation();
-						toggleLike(cardId);
-					}}>
-						<FavoriteIcon color={isLiked ? 'error' : ''} />
-					</IconButton>
+					{user && (
+						<IconButton onClick={(e) => {
+							e.stopPropagation();
+							toggleLike(cardId);
+						}}>
+							<FavoriteIcon color={isLiked ? 'error' : ''} />
+						</IconButton>
+					)}
 				</Box>
 			</CardActions>
 
