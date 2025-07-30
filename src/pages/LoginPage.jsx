@@ -1,5 +1,5 @@
 import FormPageLayout from '../layout/FormPageLayout';
-import LoginForm from '../users/components/LoginForm';
+import LoginForm from '../users/components/login/LoginForm';
 
 function LoginPage() {
   return (
