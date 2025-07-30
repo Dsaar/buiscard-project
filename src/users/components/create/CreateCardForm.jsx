@@ -1,14 +1,21 @@
-import React from "react";
-import { TextField, Grid } from "@mui/material";
-import useForm from "../../hooks/useForm";
-import createCardSchema from "../models/createCardSchema";
-import initialCreateCardForm from "../helpers/initialForms/initialCreateCardForm";
+import { useMediaQuery, useTheme } from "@mui/material";
+import useForm from "../../../hooks/useForm";
+import createCardSchema from "../../models/createCardSchema";
+import initialCreateCardForm from "../../helpers/initialForms/initialCreateCardForm";
 import axios from "axios";
-import Form from "../../components/Form";
-import { getToken } from '../services/localStorageService';
-import ENDPOINTS from "../../api/endpoints";
+import ENDPOINTS from "../../../api/endpoints";
+import { getToken } from "../../services/localStorageService";
+import { useSnack } from "../../../providers/SnackBarProvider";
+import { useNavigate } from "react-router-dom";
+import CreateCardFormDesktop from "./CreateCardFormDesktop";
+import CreateCardFormMobile from "./CreateCardFormMobile";
 
 function CreateCardForm() {
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+	const setSnack = useSnack();
+	const navigate = useNavigate();
+
 	const handleCreateCard = async (data) => {
 		const formattedData = {
 			title: data.title,
@@ -32,21 +39,17 @@ function CreateCardForm() {
 		};
 
 		try {
-			const token = getToken(); 
-			console.log("Sending token:", token);// get token from localStorage
-			const response = await axios.post(
+			const token = getToken();
+			await axios.post(
 				ENDPOINTS.cards.create,
 				formattedData,
-				{
-					headers: {
-						"x-auth-token": token, // pass token here
-					},
-				}
+				{ headers: { "x-auth-token": token } }
 			);
-			alert("Card created successfully!");
+			setSnack("success", "Card created successfully!");
+			navigate("/my-cards");
 		} catch (error) {
-			alert("Card creation failed.");
 			console.error(error);
+			setSnack("error", "Failed to create card.");
 		}
 	};
 
@@ -73,27 +76,22 @@ function CreateCardForm() {
 		{ name: "zip", label: "Zip", type: "number", required: false },
 	];
 
-	return (
-		<Form onSubmit={handleSubmit} title="Create Card">
-			<Grid container spacing={2} sx={{ display: "flex", justifyContent: "center" }}>
-				{fields.map((field) => (
-					<Grid item xs={12} sm={6} key={field.name}>
-						<TextField
-							fullWidth
-							sx={{ width: "400px" }}
-							name={field.name}
-							label={field.label}
-							type={field.type || "text"}
-							required={field.required !== false}
-							error={!!errors[field.name]}
-							helperText={errors[field.name]}
-							value={formDetails[field.name]}
-							onChange={handleChange}
-						/>
-					</Grid>
-				))}
-			</Grid>
-		</Form>
+	return isMobile ? (
+		<CreateCardFormMobile
+			fields={fields}
+			formDetails={formDetails}
+			errors={errors}
+			handleChange={handleChange}
+			handleSubmit={handleSubmit}
+		/>
+	) : (
+		<CreateCardFormDesktop
+			fields={fields}
+			formDetails={formDetails}
+			errors={errors}
+			handleChange={handleChange}
+			handleSubmit={handleSubmit}
+		/>
 	);
 }
 

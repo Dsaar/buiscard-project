@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateCardForm from '../users/components/CreateCardForm'
+import CreateCardForm from '../users/components/create/CreateCardForm'
 import FormPageLayout from '../layout/FormPageLayout';
 
 
