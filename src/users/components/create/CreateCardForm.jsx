@@ -9,6 +9,7 @@ import { useSnack } from "../../../providers/SnackBarProvider";
 import { useNavigate } from "react-router-dom";
 import CreateCardFormDesktop from "./CreateCardFormDesktop";
 import CreateCardFormMobile from "./CreateCardFormMobile";
+import { formatCardData } from "../../helpers/formats/formatCardData";
 
 function CreateCardForm() {
 	const theme = useTheme();
@@ -17,27 +18,7 @@ function CreateCardForm() {
 	const navigate = useNavigate();
 
 	const handleCreateCard = async (data) => {
-		const formattedData = {
-			title: data.title,
-			subtitle: data.subtitle,
-			description: data.description,
-			phone: data.phone,
-			email: data.email,
-			web: data.web,
-			image: {
-				url: data.imageUrl,
-				alt: data.imageAlt,
-			},
-			address: {
-				state: data.state,
-				country: data.country,
-				city: data.city,
-				street: data.street,
-				houseNumber: data.houseNumber,
-				zip: data.zip,
-			},
-		};
-
+		const formattedData = formatCardData(data);
 		try {
 			const token = getToken();
 			await axios.post(
@@ -52,6 +33,7 @@ function CreateCardForm() {
 			setSnack("error", "Failed to create card.");
 		}
 	};
+
 
 	const { formDetails, errors, handleChange, handleSubmit } = useForm(
 		initialCreateCardForm,
