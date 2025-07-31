@@ -23,7 +23,7 @@ function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleS
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>
 							<TextField
-							sx={{width:'300px'}}
+							sx={{width:'320px'}}
 								fullWidth
 								name={field.name}
 								label={field.label}

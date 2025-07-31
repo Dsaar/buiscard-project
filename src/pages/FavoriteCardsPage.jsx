@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Container, Typography } from "@mui/material";
+import { Container, Divider, Typography } from "@mui/material";
 import axios from "axios";
 import { getToken } from "../users/services/localStorageService";
 import { useCurrentUser } from "../users/providers/UserProvider";
 import { useSnack } from "../providers/SnackBarProvider";
-import BCards from "../cards/components/Bcards";
+import BCards from "../cards/components/BCards";
 import ENDPOINTS from "../api/endpoints";
 
 function FavoriteCardsPage() {
@@ -64,6 +64,7 @@ function FavoriteCardsPage() {
   return (
     <Container sx={{ paddingBottom: 10 }}>
       <Typography variant="h4" gutterBottom>Favorite Cards</Typography>
+      <Divider sx={{ mb: 3 }} />
       <BCards
         cards={favCards}
         setCards={setFavCards}

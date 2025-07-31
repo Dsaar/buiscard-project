@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Typography from '@mui/material/Typography';
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import BCards from '../cards/components/BCards';
 import axios from 'axios';
 import { useSnack } from '../providers/SnackBarProvider';
@@ -83,6 +83,7 @@ function CardsPage() {
   return (
     <Container sx={{ paddingBottom: 10 }}>
       <Typography variant="h4" gutterBottom>Cards Page</Typography>
+      <Divider sx={{ mb: 3 }} />
       <BCards
         cards={filteredCards}
         setCards={setCards}

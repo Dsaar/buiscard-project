@@ -23,7 +23,7 @@ function LoginFormMobile({ formDetails, errors, handleChange, handleSubmit }) {
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<TextField
-						sx={{width:'300px'}}
+						sx={{width:'320px'}}
 							fullWidth
 							name="email"
 							label="Email"
@@ -36,7 +36,7 @@ function LoginFormMobile({ formDetails, errors, handleChange, handleSubmit }) {
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
-							sx={{ width: '300px' }}
+							sx={{ width: '320px' }}
 							fullWidth
 							name="password"
 							label="Password"
@@ -49,7 +49,7 @@ function LoginFormMobile({ formDetails, errors, handleChange, handleSubmit }) {
 					</Grid>
 					<Grid item xs={12}>
 						<Button
-							sx={{ width: '300px' }}
+							sx={{ width: '320px' }}
 							fullWidth
 							variant="outlined"
 							startIcon={<PersonAddAltIcon />}

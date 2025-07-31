@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Divider, Typography } from '@mui/material';
 import axios from 'axios';
-import BCards from '../cards/components/Bcards';
+import BCards from '../cards/components/BCards';
 import { getToken } from '../users/services/localStorageService';
 import { useSnack } from '../providers/SnackBarProvider';
 import { useCurrentUser } from '../users/providers/UserProvider';
@@ -63,6 +63,7 @@ function MyCardsPage() {
       <Typography variant="h4" gutterBottom>
         My Cards
       </Typography>
+      <Divider sx={{ mb: 3 }} />
       <BCards cards={myCards} setCards={setMyCards} onToggleLike={handleToggleLike} user={user} />
     </Container>
   );
