@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, CircularProgress } from '@mui/material';
 import { getUserById } from '../users/services/userService';
 import { useCurrentUser } from '../users/providers/UserProvider';
-import EditUserForm from '../users/components/EditUserForm';
+import EditUserForm from '../users/components/edituser/EditUserForm';
 import { useNavigate } from 'react-router-dom';
 
 function EditUserPage() {
