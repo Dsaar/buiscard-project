@@ -6,7 +6,8 @@ import {
 	Box,
 	CircularProgress,
 	Button,
-	Avatar
+	Avatar,
+	Paper
 } from '@mui/material';
 import { getUserById } from '../users/services/userService';
 import { useCurrentUser } from '../users/providers/UserProvider';
@@ -47,9 +48,10 @@ function UserProfilePage() {
 	}
 
 	return (
-		<Container>
+		<Container sx={{display:'flex', justifyContent:"center"}}>
+			<Paper elevation={4} sx={{ p: 4, borderRadius: 3, maxWidth: '800px', width: '100%',display:'flex', flexDirection:'column',alignItems:"center", marginTop:"50px"}}>
 			<Typography variant="h4" gutterBottom>User Profile</Typography>
-			<Divider sx={{ mb: 3 }} />
+			<Divider sx={{ mb: 3, width:'300px'}} />
 
 			{/* Avatar */}
 			<Box display="flex" justifyContent="center" mb={3}>
@@ -82,6 +84,7 @@ function UserProfilePage() {
 					Edit Profile
 				</Button>
 			</Box>
+			</Paper>
 		</Container>
 	);
 }
