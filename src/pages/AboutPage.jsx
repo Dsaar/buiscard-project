@@ -10,9 +10,12 @@ import {
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ROUTES from "../router/routesDictionary";
+import { useNavigate } from "react-router-dom";
 
 export default function AboutPage() {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default, minHeight: "100vh" }}>
@@ -132,6 +135,7 @@ export default function AboutPage() {
           Ready to Get Started?
         </Typography>
         <Button
+          onClick={() => navigate(ROUTES.register)}
           variant="contained"
           sx={{
             backgroundColor: theme.palette.primary.main,

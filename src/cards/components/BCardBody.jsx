@@ -2,9 +2,27 @@ import { CardContent, Divider, Typography } from "@mui/material";
 
 function BCardBody({ title, subtitle, phone, city, bizNumber }) {
 	return (
-		<CardContent>
-			<Typography variant="h5">{title}</Typography>
-			<Typography variant="h6">{subtitle}</Typography>
+		<CardContent sx={{ overflow: "hidden" }}>
+			<Typography
+				variant="h5"
+				sx={{
+					whiteSpace: "nowrap",
+					overflow: "hidden",
+					textOverflow: "ellipsis",
+				}}
+			>
+				{title}
+			</Typography>
+			<Typography
+				variant="h6"
+				sx={{
+					whiteSpace: "nowrap",
+					overflow: "hidden",
+					textOverflow: "ellipsis",
+				}}
+			>
+				{subtitle}
+			</Typography>
 			<Divider sx={{ marginY: 1 }} />
 			<Typography variant="body2">
 				<strong>Phone:</strong> {phone}
