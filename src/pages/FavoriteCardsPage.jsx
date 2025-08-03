@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Container, Divider, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import axios from "axios";
 import { getToken } from "../users/services/localStorageService";
 import { useCurrentUser } from "../users/providers/UserProvider";
 import { useSnack } from "../providers/SnackBarProvider";
 import BCards from "../cards/components/BCards";
 import ENDPOINTS from "../api/endpoints";
+import PageHeader from "../components/PageHeader"; // <-- import PageHeader
 
 function FavoriteCardsPage() {
   const [favCards, setFavCards] = useState([]);
@@ -63,8 +64,10 @@ function FavoriteCardsPage() {
 
   return (
     <Container sx={{ paddingBottom: 10 }}>
-      <Typography variant="h4" gutterBottom>Favorite Cards</Typography>
-      <Divider sx={{ mb: 3 }} />
+      <PageHeader
+        title="Favorite Cards"
+        description="View and manage the cards you have liked."
+      />
       <BCards
         cards={favCards}
         setCards={setFavCards}

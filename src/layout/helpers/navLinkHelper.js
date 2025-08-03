@@ -15,7 +15,7 @@ export const getNavLinks = (user) => {
 	links.push({ to: ROUTES.favorite, label: 'Favorite Card' });
 
 	if (user.isAdmin) {
-		links.push({ to: ROUTES.sandbox, label: 'Sandbox' });
+		links.push({ to: ROUTES.sandbox, label: 'CRM' });
 	}
 
 	return links;

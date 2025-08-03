@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Container, Divider, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import axios from 'axios';
 import BCards from '../cards/components/BCards';
 import { getToken } from '../users/services/localStorageService';
 import { useSnack } from '../providers/SnackBarProvider';
 import { useCurrentUser } from '../users/providers/UserProvider';
 import ENDPOINTS from '../api/endpoints';
+import PageHeader from '../components/PageHeader'; // <-- import the new header
 
 function MyCardsPage() {
   const [myCards, setMyCards] = useState([]);
@@ -60,11 +61,16 @@ function MyCardsPage() {
 
   return (
     <Container sx={{ paddingBottom: 10 }}>
-      <Typography variant="h4" gutterBottom>
-        My Cards
-      </Typography>
-      <Divider sx={{ mb: 3 }} />
-      <BCards cards={myCards} setCards={setMyCards} onToggleLike={handleToggleLike} user={user} />
+      <PageHeader
+        title="My Cards"
+        description="Manage and review all the cards you have created."
+      />
+      <BCards
+        cards={myCards}
+        setCards={setMyCards}
+        onToggleLike={handleToggleLike}
+        user={user}
+      />
     </Container>
   );
 }

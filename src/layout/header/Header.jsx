@@ -33,7 +33,7 @@ function Header() {
 	const fullUser = useFullUser(user);
 	const navigate = useNavigate();
 	const { query, setQuery } = useSearchQuery();
-	const debouncedQuery = useDebounce(query, 300); // Debounce for smoother updates
+	const debouncedQuery = useDebounce(query, 300); 
 	const muiTheme = useMuiTheme();
 	const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 	const [drawerOpen, setDrawerOpen] = useState(false);

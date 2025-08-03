@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import Typography from '@mui/material/Typography';
-import { Container, Divider } from '@mui/material';
+import { Container } from '@mui/material';
 import BCards from '../cards/components/BCards';
 import axios from 'axios';
 import { useSnack } from '../providers/SnackBarProvider';
@@ -8,9 +7,9 @@ import AddNewItemButton from '../components/AddNewItemButton';
 import ROUTES from '../router/routesDictionary';
 import { useCurrentUser } from '../users/providers/UserProvider';
 import { getToken } from '../users/services/localStorageService';
-import { toggleLikedCard } from '../users/services/likesService';
 import { useSearchParams } from "react-router-dom";
 import ENDPOINTS from '../api/endpoints';
+import PageHeader from '../components/PageHeader';
 
 
 function CardsPage() {
@@ -82,8 +81,11 @@ function CardsPage() {
   
   return (
     <Container sx={{ paddingBottom: 10 }}>
-      <Typography variant="h4" gutterBottom>Cards Page</Typography>
-      <Divider sx={{ mb: 3 }} />
+      <PageHeader
+        title="BCard"
+        description="Browse and manage all your business cards in one place."
+        highlightFirst
+      />
       <BCards
         cards={filteredCards}
         setCards={setCards}
@@ -93,6 +95,7 @@ function CardsPage() {
       {user && <AddNewItemButton to={ROUTES.createCard} text="Create" />}
     </Container>
   );
+
 }
 
 export default CardsPage;
