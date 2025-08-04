@@ -12,16 +12,17 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ROUTES from "../router/routesDictionary";
 import { useNavigate } from "react-router-dom";
-import CreateIcon from '@mui/icons-material/Create';
-import SearchIcon from '@mui/icons-material/Search';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import AdsClickIcon from '@mui/icons-material/AdsClick';
+import AdsClickIcon from "@mui/icons-material/AdsClick";
 
-
+// New reusable components
+import IconBox from "../components/IconBox";
+import OfferCard from "../components/OfferCard";
+import { getOffers } from "../data/offersData";
 
 export default function AboutPage() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const offers = getOffers(); // Imported from external file
 
   return (
     <Box>
@@ -50,21 +51,9 @@ export default function AboutPage() {
           textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            width: 64,
-            height: 64,
-            borderRadius: 2,
-            backgroundColor: "#fdd83533", // light yellow background
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mx: "auto",
-            mb: 2,
-          }}
-        >
+        <IconBox bgColor="#fdd83533">
           <AdsClickIcon sx={{ fontSize: 32, color: theme.palette.primary.main }} />
-        </Box>
+        </IconBox>
         <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
           Our Mission
         </Typography>
@@ -86,89 +75,9 @@ export default function AboutPage() {
           networking experience
         </Typography>
         <Grid container spacing={3} justifyContent="center">
-          {[
-            {
-              title: "Create",
-              text: "Design unique and professional business cards effortlessly with our intuitive creation tools.",
-              icon: (
-                <Box
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 2, // rounded corners
-                    backgroundColor: "#72aed9ff", // light blue background
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    mx: "auto",
-                    mb: 2,
-                  }}
-                >
-                  <CreateIcon sx={{ fontSize: 32, color: theme.palette.primary.light }} />
-                </Box>
-              ),
-            },
-            {
-              title: "Browse",
-              text: "Explore a wide range of business cards, discover new contacts, and connect with professionals.",
-              icon: (
-                <Box
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 2,
-                    backgroundColor: "#cb77d7ff", // light purple
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    mx: "auto",
-                    mb: 2,
-                  }}
-                >
-                  <SearchIcon sx={{ fontSize: 32, color: theme.palette.primary.light }} />
-                </Box>
-              ),
-            },
-            {
-              title: "CRM for Admins",
-              text: "Manage business card data, users, and maintain business relationships with advanced analytics.",
-              icon: (
-                <Box
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 2,
-                    backgroundColor: "#88f891ff", // light green
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    mx: "auto",
-                    mb: 2,
-                  }}
-                >
-                  <SupervisorAccountIcon sx={{ fontSize: 32, color: theme.palette.primary.light }} />
-                </Box>
-              ),
-            },
-          ].map((item, index) => (
+          {offers.map((item, index) => (
             <Grid item xs={12} md={4} key={index}>
-              <Paper
-                elevation={2}
-                sx={{
-                  p: 3,
-                  textAlign: "center",
-                  height: "100%",
-                  borderRadius: 3,
-                  maxWidth:560,
-                  mx:'auto'
-                }}
-              >
-                {item.icon}
-                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 1 }}>
-                  {item.title}
-                </Typography>
-                <Typography sx={{ color: "text.secondary" }}>{item.text}</Typography>
-              </Paper>
+              <OfferCard icon={item.icon} title={item.title} text={item.text} />
             </Grid>
           ))}
         </Grid>
@@ -207,7 +116,7 @@ export default function AboutPage() {
 
       {/* Call to Action */}
       <Box sx={{ textAlign: "center", py: 6 }}>
-        <Typography variant="h5" sx={{ mb: 2,fontWeight:'bold' }}>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
           Ready to Get Started?
         </Typography>
         <Button
