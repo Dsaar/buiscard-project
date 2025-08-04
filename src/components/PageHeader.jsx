@@ -11,7 +11,7 @@ export default function PageHeader({ title, description, highlightFirst = false 
 	return (
 		<Box sx={{ textAlign: "center", mb: 4, pt: 6 }}>
 			<Typography
-				variant="h3"
+				variant="h2"
 				sx={{
 					fontWeight: "bold",
 					mb: 1,

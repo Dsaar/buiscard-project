@@ -66,7 +66,7 @@ function CardsPage() {
         )
       );
 
-      // ✅ Add snackbar here
+    
       if (updatedCard.likes.includes(user._id)) {
         setSnack("success", "Card liked successfully!");
       } else {
