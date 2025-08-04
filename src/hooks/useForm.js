@@ -41,11 +41,17 @@ export default function useForm(initialForm, schemaObj, onSubmit) {
 		}
 	};
 
+	const handleReset = () => {
+		setFormDetails(initialForm);
+		setErrors({});
+	};
+
 	return {
 		formDetails,
 		setFormDetails,
 		errors,
 		handleChange,
 		handleSubmit,
+		handleReset,
 	};
 }

@@ -18,7 +18,13 @@ const Form = ({
 }) => {
 	const navigate = useNavigate();
 	const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // detect mobile
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
+
+	const handleReset = (e) => {
+		e.preventDefault();
+		const form = e.target.closest("form");
+		if (form) form.reset(); 
+	};
 
 	return (
 		<Box
@@ -61,7 +67,7 @@ const Form = ({
 						<FormButton
 							node={<LoopIcon />}
 							variant="outlined"
-							onClick={onReset}
+							onClick={onReset || handleReset}
 							fullWidth
 						/>
 					</Box>
@@ -72,10 +78,15 @@ const Form = ({
 						<FormButton
 							node="SUBMIT"
 							onClick={onSubmit}
-							size="large"
+							size={isMobile ? "medium" : "large"}  
 							fullWidth
+							sx={{
+								fontSize: isMobile ? "0.9rem" : "1rem",
+								py: isMobile ? 1 : 1.5
+							}}
 						/>
 					</Box>
+
 				</Grid>
 			</Grid>
 		</Box>

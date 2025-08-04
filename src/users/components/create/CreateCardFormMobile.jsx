@@ -1,10 +1,10 @@
 import { TextField, Grid, Box } from "@mui/material";
 import Form from "../../../components/Form";
 
-function CreateCardFormMobile({ fields, formDetails, errors, handleChange, handleSubmit }) {
+function CreateCardFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,onReset }) {
 	return (
 		<Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "100vh", py: 4 }}>
-			<Form onSubmit={handleSubmit} title="Create Card">
+			<Form onSubmit={handleSubmit} onReset={onReset} title="Create Card">
 				<Grid container spacing={2}>
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>

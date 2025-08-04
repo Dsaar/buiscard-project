@@ -1,9 +1,9 @@
 import { TextField, Grid } from "@mui/material";
 import Form from "../../../components/Form";
 
-function CreateCardFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit }) {
+function CreateCardFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit, onReset }) {
 	return (
-		<Form onSubmit={handleSubmit} title="Create Card">
+		<Form onSubmit={handleSubmit} onReset={onReset} title="Create Card">
 			<Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
 				{fields.map((field) => (
 					<Grid item xs={12} sm={6} key={field.name}>

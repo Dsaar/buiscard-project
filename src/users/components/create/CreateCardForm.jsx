@@ -18,6 +18,7 @@ function CreateCardForm() {
 	const navigate = useNavigate();
 
 	const handleCreateCard = async (data) => {
+		console.log("Submitting data:", data); 
 		const formattedData = formatCardData(data);
 		try {
 			const token = getToken();
@@ -29,13 +30,14 @@ function CreateCardForm() {
 			setSnack("success", "Card created successfully!");
 			navigate("/my-cards");
 		} catch (error) {
-			console.error(error);
+			console.error(error.response?.data || error.message);
 			setSnack("error", "Failed to create card.");
 		}
 	};
 
 
-	const { formDetails, errors, handleChange, handleSubmit } = useForm(
+
+	const { formDetails, errors, handleChange, handleSubmit, handleReset } = useForm(
 		initialCreateCardForm,
 		createCardSchema,
 		handleCreateCard
@@ -65,6 +67,7 @@ function CreateCardForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	) : (
 		<CreateCardFormDesktop
@@ -73,6 +76,7 @@ function CreateCardForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	);
 }

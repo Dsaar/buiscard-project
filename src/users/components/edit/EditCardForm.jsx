@@ -19,7 +19,7 @@ function EditCardForm() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-	const { formDetails, setFormDetails, errors, handleChange, handleSubmit } = useForm(
+	const { formDetails, setFormDetails, errors, handleChange, handleSubmit, handleReset } = useForm(
 		{},
 		createCardSchema,
 		async (data) => {
@@ -99,6 +99,7 @@ function EditCardForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	) : (
 		<EditCardFormDesktop
@@ -107,6 +108,7 @@ function EditCardForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	);
 }
