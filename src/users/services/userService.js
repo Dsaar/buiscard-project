@@ -14,3 +14,17 @@ export const getUserById = async (userId) => {
 	);
 	return response.data;
 };
+
+
+export const deleteUserById = async (userId) => {
+	const token = getToken();
+	if (!token) throw new Error("No token found");
+
+	const response = await axios.delete(
+		ENDPOINTS.users.deleteUser(userId),
+		{
+			headers: { "x-auth-token": token },
+		}
+	);
+	return response.data;
+}

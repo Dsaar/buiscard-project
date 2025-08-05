@@ -1,90 +1,126 @@
 import React, { useEffect, useState } from 'react';
 import {
 	Container,
-	Typography,
-	Divider,
 	Box,
 	CircularProgress,
 	Button,
-	Avatar,
-	Paper
+	Paper,
 } from '@mui/material';
-import { getUserById } from '../users/services/userService';
 import { useCurrentUser } from '../users/providers/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../router/routesDictionary';
+import { getUserById, deleteUserById } from '../users/services/userService';
+import { removeToken } from '../users/services/localStorageService';
+import { useSnack } from '../providers/SnackBarProvider';
+
+// Icons
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PublicIcon from '@mui/icons-material/Public';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import HomeIcon from '@mui/icons-material/Home';
+
+// Components
+import ProfileHeader from '../components/common/ProfileHeader';
+import ProfileDetails from '../components/common/ProfileDetails';
+import DeleteConfirmationDialog from '../components/common/DeleteConfirmationDialog';
 
 function UserProfilePage() {
-	const { user } = useCurrentUser();
+	const { user, setUser, setToken } = useCurrentUser();
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [openDialog, setOpenDialog] = useState(false);
 	const navigate = useNavigate();
+	const setSnack = useSnack();
 
 	useEffect(() => {
-		if (user && user._id) {
+		if (user?._id) {
 			getUserById(user._id)
 				.then(setDetails)
-				.catch((err) => console.error('Failed to fetch user details:', err))
+				.catch(() => setSnack('error', 'Failed to fetch user details'))
 				.finally(() => setLoading(false));
-		} else {
-			setLoading(false);
-		}
+		} else setLoading(false);
 	}, [user]);
 
-	if (loading) {
+	const handleDeleteUser = async () => {
+		try {
+			await deleteUserById(user._id);
+			removeToken();
+			setUser(null);
+			setToken(null);
+			setSnack('success', 'Account deleted successfully.');
+			navigate('/');
+		} catch {
+			setSnack('error', 'Failed to delete account.');
+		}
+	};
+
+	if (loading)
 		return (
 			<Box display="flex" justifyContent="center" mt={5}>
 				<CircularProgress />
 			</Box>
 		);
-	}
 
-	if (!details) {
+	if (!details)
 		return (
 			<Container sx={{ mt: 5 }}>
-				<Typography color="error">Unable to load user details.</Typography>
+				<p>Unable to load user details.</p>
 			</Container>
 		);
-	}
+
+	const initials =
+		!details.image?.url && details.name.first && details.name.last
+			? `${details.name.first[0]}${details.name.last[0]}`
+			: '';
+
+	const sections = [
+		{
+			title: 'Contact Information',
+			fields: [
+				{ icon: <EmailIcon />, label: 'Email', value: details.email },
+				{ icon: <PhoneIcon />, label: 'Phone', value: details.phone },
+				{ icon: <BadgeIcon />, label: 'User ID', value: details._id },
+			],
+		},
+		{
+			title: 'Location',
+			sx: { pl: { md: 22 }, width: '500px' },
+			fields: [
+				{ icon: <PublicIcon />, label: 'Country', value: details.address?.country },
+				{ icon: <LocationCityIcon />, label: 'City', value: details.address?.city },
+				{ icon: <HomeIcon />, label: 'Address', value: details.address?.street },
+			],
+		},
+	];
 
 	return (
-		<Container sx={{display:'flex', justifyContent:"center"}}>
-			<Paper elevation={4} sx={{ p: 4, borderRadius: 3, maxWidth: '800px', width: '100%',display:'flex', flexDirection:'column',alignItems:"center", marginTop:"50px"}}>
-			<Typography variant="h4" gutterBottom>User Profile</Typography>
-			<Divider sx={{ mb: 3, width:'300px'}} />
+		<Container sx={{ display: 'flex', justifyContent: 'center' }}>
+			<Paper elevation={4} sx={{ p: 4, borderRadius: 3, maxWidth: '900px', width: '100%', mt: 5 }}>
+				<ProfileHeader
+					title="User Profile"
+					image={details.image?.url}
+					alt={details.image?.alt}
+					initials={initials}
+				/>
+				<ProfileDetails sections={sections} />
 
-			{/* Avatar */}
-			<Box display="flex" justifyContent="center" mb={3}>
-				<Avatar
-					src={details.image?.url}
-					alt={details.image?.alt || `${details.name.first} ${details.name.last}`}
-					sx={{ width: 120, height: 120, border: '2px solid #ccc' }}
-				>
-					{(!details.image?.url && details.name.first && details.name.last) &&
-						`${details.name.first[0]}${details.name.last[0]}`}
-				</Avatar>
-			</Box>
-
-			<Box sx={{ lineHeight: 2 }}>
-				<Typography><strong>First Name:</strong> {details.name.first}</Typography>
-				<Typography><strong>Middle Name:</strong> {details.name.middle}</Typography>
-				<Typography><strong>Last Name:</strong> {details.name.last}</Typography>
-				<Typography><strong>Email:</strong> {details.email}</Typography>
-				<Typography><strong>Phone:</strong> {details.phone}</Typography>
-				<Typography><strong>Admin:</strong> {details.isAdmin ? 'Yes' : 'No'}</Typography>
-				<Typography><strong>Business:</strong> {details.isBusiness ? 'Yes' : 'No'}</Typography>
-				<Typography><strong>ID:</strong> {details._id}</Typography>
-			</Box>
-
-			<Box mt={3}>
-				<Button
-					variant="outlined"
-					onClick={() => navigate(ROUTES.profileEdit)}
-				>
-					Edit Profile
-				</Button>
-			</Box>
+				<Box display="flex" justifyContent="center" mt={4} gap={2}>
+					<Button variant="outlined" onClick={() => navigate(ROUTES.profileEdit)} sx={{ px: 4, borderRadius: 3 }}>
+						Edit Profile
+					</Button>
+					<Button variant="outlined" color="error" sx={{ px: 4, borderRadius: 3 }} onClick={() => setOpenDialog(true)}>
+						Delete Account
+					</Button>
+				</Box>
 			</Paper>
+
+			<DeleteConfirmationDialog
+				open={openDialog}
+				onClose={() => setOpenDialog(false)}
+				onConfirm={handleDeleteUser}
+			/>
 		</Container>
 	);
 }
