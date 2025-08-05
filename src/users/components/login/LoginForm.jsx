@@ -50,7 +50,7 @@ function LoginForm() {
 		}
 	};
 
-	const { formDetails, errors, handleChange, handleSubmit,handleReset } = useForm(
+	const { formDetails, errors, handleChange, handleSubmit,handleReset,isFormValid } = useForm(
 		initialLoginForm,
 		loginSchema,
 		handleLogin
@@ -63,6 +63,7 @@ function LoginForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	) : (
 		<LoginFormDesktop
@@ -71,6 +72,7 @@ function LoginForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	);
 }

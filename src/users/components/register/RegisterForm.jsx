@@ -58,7 +58,7 @@ function RegisterForm() {
 		}
 	};
 
-	const { formDetails, errors, handleChange, handleSubmit,handleReset } = useForm(
+	const { formDetails, errors, handleChange, handleSubmit,handleReset,isFormValid } = useForm(
 		initialSignupForm,
 		signupSchema,
 		handleSignUp
@@ -95,6 +95,7 @@ function RegisterForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	) : (
 		<RegisterFormDesktop
@@ -104,6 +105,7 @@ function RegisterForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	);
 }

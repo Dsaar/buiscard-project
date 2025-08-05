@@ -9,7 +9,7 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { useNavigate } from "react-router-dom";
 import Form from "../../../components/Form";
 
-function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit,onReset }) {
+function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit,onReset,isFormValid }) {
 	const navigate = useNavigate();
 
 	return (
@@ -18,6 +18,7 @@ function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit,onRe
 			onReset={onReset}
 			title="Sign In"
 			styles={{ maxWidth: "900px" }}
+			isFormValid={isFormValid}
 		>
 			<Grid container spacing={2} sx={{ display: "flex", justifyContent: "center" }}>
 				<Grid item xs={12} sm={6}>

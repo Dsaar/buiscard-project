@@ -46,6 +46,21 @@ export default function useForm(initialForm, schemaObj, onSubmit) {
 		setErrors({});
 	};
 
+	const isFormValid = () => {
+		const requiredFields = Object.keys(schemaObj).filter(
+			(key) => schemaObj[key]._flags.presence === "required"
+		);
+
+		const allFilled = requiredFields.every((field) => {
+			const value = formDetails[field];
+			return value !== undefined && value !== null && value !== "";
+		});
+
+		const noErrors = Object.keys(errors).length === 0;
+
+		return allFilled && noErrors;
+	};
+
 	return {
 		formDetails,
 		setFormDetails,
@@ -53,5 +68,6 @@ export default function useForm(initialForm, schemaObj, onSubmit) {
 		handleChange,
 		handleSubmit,
 		handleReset,
+		isFormValid,
 	};
 }

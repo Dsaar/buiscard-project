@@ -4,7 +4,7 @@ import Form from "../../../components/Form";
 function EditUserFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,onReset }) {
 	return (
 		<Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "100vh", py: 4 }}>
-			<Form onSubmit={handleSubmit} onReset={onReset} title="Edit Profile">
+			<Form onSubmit={handleSubmit} onReset={onReset} title="Edit Profile" isFormValid={isFormValid}>
 				<Grid container spacing={2}>
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>

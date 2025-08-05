@@ -37,7 +37,7 @@ function CreateCardForm() {
 
 
 
-	const { formDetails, errors, handleChange, handleSubmit, handleReset } = useForm(
+	const { formDetails, errors, handleChange, handleSubmit, handleReset,isFormValid } = useForm(
 		initialCreateCardForm,
 		createCardSchema,
 		handleCreateCard
@@ -68,6 +68,7 @@ function CreateCardForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	) : (
 		<CreateCardFormDesktop
@@ -77,6 +78,7 @@ function CreateCardForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	);
 }

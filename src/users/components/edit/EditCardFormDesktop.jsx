@@ -1,9 +1,9 @@
 import { TextField, Grid } from "@mui/material";
 import Form from "../../../components/Form";
 
-function EditCardFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit,onReset }) {
+function EditCardFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit,onReset,isFormValid }) {
 	return (
-		<Form onSubmit={handleSubmit} onReset={onReset} title="Edit Card">
+		<Form onSubmit={handleSubmit} onReset={onReset} title="Edit Card" isFormValid={isFormValid}>
 			<Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
 				{fields.map((field) => (
 					<Grid item xs={12} sm={6} key={field.name}>

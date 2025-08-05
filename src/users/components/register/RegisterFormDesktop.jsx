@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import Form from "../../../components/Form";
 
-function RegisterFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit, onReset }) {
+function RegisterFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit, onReset,isFormValid }) {
 	return (
-		<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up">
+		<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up" isFormValid={isFormValid}>
 			<Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
 				{fields.map((field) => (
 					<Grid item xs={12} sm={6} key={field.name}>

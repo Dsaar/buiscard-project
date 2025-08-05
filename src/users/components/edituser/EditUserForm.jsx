@@ -19,7 +19,7 @@ function EditUserForm() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-	const { formDetails, setFormDetails, errors, handleChange, handleSubmit, handleReset } = useForm(
+	const { formDetails, setFormDetails, errors, handleChange, handleSubmit, handleReset,isFormValid } = useForm(
 		{},
 		editUserSchema,
 		async (data) => {
@@ -109,6 +109,7 @@ function EditUserForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 		/>
 	) : (
 		<EditUserFormDesktop
@@ -118,6 +119,7 @@ function EditUserForm() {
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
 			onReset={handleReset}
+			isFormValid={isFormValid}
 
 		/>
 	);

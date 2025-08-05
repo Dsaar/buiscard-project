@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import Form from "../../../components/Form";
 
-function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit }) {
+function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,isFormValid }) {
 	return (
 		<Box
 			sx={{
@@ -18,7 +18,7 @@ function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleS
 				py: 4,
 			}}
 		>
-			<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up">
+			<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up" isFormValid={isFormValid}>
 				<Grid container spacing={2}>
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>
