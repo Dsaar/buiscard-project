@@ -6,8 +6,9 @@ import {
 	Box
 } from "@mui/material";
 import Form from "../../../components/Form";
+import PasswordField from "../../../components/PasswordField";
 
-function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,isFormValid,onReset }) {
+function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit, isFormValid, onReset }) {
 	return (
 		<Box
 			sx={{
@@ -22,18 +23,30 @@ function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleS
 				<Grid container spacing={2}>
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>
-							<TextField
-							sx={{width:'320px'}}
-								fullWidth
-								name={field.name}
-								label={field.label}
-								type={field.type || "text"}
-								required={field.required !== false}
-								error={!!errors[field.name]}
-								helperText={errors[field.name]}
-								onChange={handleChange}
-								value={formDetails[field.name]}
-							/>
+							{field.name === "password" ? (
+								<PasswordField
+									sx={{ width: '320px' }}
+									value={formDetails[field.name]}
+									onChange={handleChange}
+									error={errors[field.name]}
+									helperText={errors[field.name]}
+									label={field.label}
+									name={field.name}
+								/>
+							) : (
+								<TextField
+									sx={{ width: '320px' }}
+									fullWidth
+									name={field.name}
+									label={field.label}
+									type={field.type || "text"}
+									required={field.required !== false}
+									error={!!errors[field.name]}
+									helperText={errors[field.name]}
+									onChange={handleChange}
+									value={formDetails[field.name]}
+								/>
+							)}
 						</Grid>
 					))}
 					<Grid item xs={12}>

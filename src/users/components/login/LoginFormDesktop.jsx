@@ -1,6 +1,4 @@
-// LoginFormDesktop.jsx
 import {
-	TextField,
 	Grid,
 	Box,
 	Button
@@ -8,8 +6,9 @@ import {
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { useNavigate } from "react-router-dom";
 import Form from "../../../components/Form";
+import PasswordField from "../../../components/PasswordField";
 
-function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit,onReset,isFormValid }) {
+function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit, onReset, isFormValid }) {
 	const navigate = useNavigate();
 
 	return (
@@ -22,28 +21,24 @@ function LoginFormDesktop({ formDetails, errors, handleChange, handleSubmit,onRe
 		>
 			<Grid container spacing={2} sx={{ display: "flex", justifyContent: "center" }}>
 				<Grid item xs={12} sm={6}>
-					<TextField
-						fullWidth
-						sx={{ width: "400px" }}
-						name="email"
+					<PasswordField
 						label="Email"
-						type="email"
+						name="email"
+						sx={{ width: "400px" }}
 						value={formDetails.email}
 						onChange={handleChange}
-						error={!!errors.email}
+						error={errors.email}
 						helperText={errors.email}
+						type="email"
+						InputProps={{}} 
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					<TextField
-						fullWidth
+					<PasswordField
 						sx={{ width: "400px" }}
-						name="password"
-						label="Password"
-						type="password"
 						value={formDetails.password}
 						onChange={handleChange}
-						error={!!errors.password}
+						error={errors.password}
 						helperText={errors.password}
 					/>
 				</Grid>

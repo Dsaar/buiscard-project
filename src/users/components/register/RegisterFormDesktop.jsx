@@ -1,4 +1,3 @@
-// RegisterFormDesktop.jsx
 import {
 	TextField,
 	Grid,
@@ -7,25 +6,38 @@ import {
 	Box,
 } from "@mui/material";
 import Form from "../../../components/Form";
+import PasswordField from "../../../components/PasswordField";
 
-function RegisterFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit, onReset,isFormValid }) {
+function RegisterFormDesktop({ fields, formDetails, errors, handleChange, handleSubmit, onReset, isFormValid }) {
 	return (
 		<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up" isFormValid={isFormValid}>
 			<Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
 				{fields.map((field) => (
 					<Grid item xs={12} sm={6} key={field.name}>
-						<TextField
-							fullWidth
-							sx={{ width: '400px' }}
-							name={field.name}
-							label={field.label}
-							type={field.type || "text"}
-							required={field.required !== false}
-							error={!!errors[field.name]}
-							helperText={errors[field.name]}
-							onChange={handleChange}
-							value={formDetails[field.name]}
-						/>
+						{field.name === "password" ? (
+							<PasswordField
+								sx={{ width: '400px' }}
+								value={formDetails[field.name]}
+								onChange={handleChange}
+								error={errors[field.name]}
+								helperText={errors[field.name]}
+								label={field.label}
+								name={field.name}
+							/>
+						) : (
+							<TextField
+								fullWidth
+								sx={{ width: '400px' }}
+								name={field.name}
+								label={field.label}
+								type={field.type || "text"}
+								required={field.required !== false}
+								error={!!errors[field.name]}
+								helperText={errors[field.name]}
+								onChange={handleChange}
+								value={formDetails[field.name]}
+							/>
+						)}
 					</Grid>
 				))}
 				<Grid item xs={12} sm={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
