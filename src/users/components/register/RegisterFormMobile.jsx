@@ -18,7 +18,7 @@ function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleS
 				py: 4,
 			}}
 		>
-			<Form onSubmit={handleSubmit} title="Sign Up Form">
+			<Form onSubmit={handleSubmit} onReset={onReset} title="Sign Up">
 				<Grid container spacing={2}>
 					{fields.map((field) => (
 						<Grid item xs={12} key={field.name}>

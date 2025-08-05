@@ -14,8 +14,8 @@ function RegisterForm() {
 	const navigate = useNavigate();
 	const { setUser, setToken } = useCurrentUser();
 	const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // <--- Use theme breakpoint
-	console.log("Current screen width breakpoint match:", isMobile); // ADD THIS
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
+	console.log("Current screen width breakpoint match:", isMobile);
 
 	const handleSignUp = async (userDetails) => {
 		const userDetailsForServer = {
@@ -58,7 +58,7 @@ function RegisterForm() {
 		}
 	};
 
-	const { formDetails, errors, handleChange, handleSubmit } = useForm(
+	const { formDetails, errors, handleChange, handleSubmit,handleReset } = useForm(
 		initialSignupForm,
 		signupSchema,
 		handleSignUp
@@ -94,6 +94,7 @@ function RegisterForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	) : (
 		<RegisterFormDesktop
@@ -102,6 +103,7 @@ function RegisterForm() {
 			errors={errors}
 			handleChange={handleChange}
 			handleSubmit={handleSubmit}
+			onReset={handleReset}
 		/>
 	);
 }
