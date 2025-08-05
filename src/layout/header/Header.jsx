@@ -9,7 +9,8 @@ import {
 	Avatar,
 	Drawer,
 	useMediaQuery,
-	useTheme as useMuiTheme
+	useTheme as useMuiTheme,
+	InputAdornment
 } from '@mui/material';
 import NavLinkTemplate from '/src/components/NavLinkTemplate';
 import ROUTES from '../../router/routesDictionary';
@@ -26,6 +27,9 @@ import MobileDrawer from '../components/MobileDrawer';
 import useFullUser from '../../users/hooks/useFullUser';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import useDebounce from '../../hooks/useDebounce';
+import SearchIcon from "@mui/icons-material/Search";
+
+
 
 function Header() {
 	const { toggleMode, isDark } = useTheme();
@@ -80,7 +84,19 @@ function Header() {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						size="small"
-						sx={{ bgcolor: 'white', borderRadius: 1 }}
+						sx={{
+							bgcolor: isDark ? '#333' : 'white',
+							borderRadius: 1,
+							input: { color: isDark ? 'white' : 'black' }, 
+							'& .MuiSvgIcon-root': { color: isDark ? 'white' : 'black' },
+						}}
+						InputProps={{
+							startAdornment: (
+								<InputAdornment position="start">
+									<SearchIcon />
+								</InputAdornment>
+							),
+						}}
 					/>
 				)}
 

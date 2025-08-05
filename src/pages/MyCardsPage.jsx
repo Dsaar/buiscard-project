@@ -6,12 +6,15 @@ import { getToken } from '../users/services/localStorageService';
 import { useSnack } from '../providers/SnackBarProvider';
 import { useCurrentUser } from '../users/providers/UserProvider';
 import ENDPOINTS from '../api/endpoints';
-import PageHeader from '../components/PageHeader'; // <-- import the new header
+import PageHeader from '../components/PageHeader'; 
+import { useSearchParams } from 'react-router-dom';
 
 function MyCardsPage() {
   const [myCards, setMyCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
   const setSnack = useSnack();
   const { user } = useCurrentUser();
+  const [searchParams]=useSearchParams();
 
   const fetchMyCards = async () => {
     try {
@@ -21,6 +24,7 @@ function MyCardsPage() {
         { headers: { 'x-auth-token': token } }
       );
       setMyCards(response.data);
+      setFilteredCards(response.data);
       setSnack("success", "Your cards loaded successfully.");
     } catch (err) {
       console.error('Failed to load your cards', err);
@@ -31,6 +35,18 @@ function MyCardsPage() {
   useEffect(() => {
     fetchMyCards();
   }, []);
+
+  useEffect(() => {
+    const q = searchParams.get("q")?.toLowerCase() || "";
+    setFilteredCards(
+      myCards.filter((card) =>
+        card.title.toLowerCase().includes(q) ||
+        card.subtitle.toLowerCase().includes(q) ||
+        card.description.toLowerCase().includes(q)
+      )
+    );
+  }, [searchParams, myCards]);
+
 
   const handleToggleLike = useCallback(async (cardId) => {
     try {
@@ -66,7 +82,7 @@ function MyCardsPage() {
         description="Manage and review all the cards you have created."
       />
       <BCards
-        cards={myCards}
+        cards={filteredCards}
         setCards={setMyCards}
         onToggleLike={handleToggleLike}
         user={user}

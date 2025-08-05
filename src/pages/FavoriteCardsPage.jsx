@@ -6,12 +6,15 @@ import { useCurrentUser } from "../users/providers/UserProvider";
 import { useSnack } from "../providers/SnackBarProvider";
 import BCards from "../cards/components/BCards";
 import ENDPOINTS from "../api/endpoints";
-import PageHeader from "../components/PageHeader"; // <-- import PageHeader
+import PageHeader from "../components/PageHeader"; 
+import { useSearchParams } from "react-router-dom";
 
 function FavoriteCardsPage() {
   const [favCards, setFavCards] = useState([]);
+  const [filteredFavCards, setFilteredFavCards] = useState([]);
   const { user } = useCurrentUser();
   const setSnack = useSnack();
+  const [searchParams] = useSearchParams();
 
   const fetchFavoriteCards = async () => {
     try {
@@ -26,6 +29,7 @@ function FavoriteCardsPage() {
         card.likes.includes(user?._id)
       );
       setFavCards(liked);
+      setFilteredFavCards(liked)
       setSnack("success", "Favorite cards loaded.");
     } catch (error) {
       console.error("Failed to fetch cards:", error);
@@ -36,6 +40,18 @@ function FavoriteCardsPage() {
   useEffect(() => {
     fetchFavoriteCards();
   }, [user]);
+
+  useEffect(() => {
+    const q = searchParams.get("q")?.toLowerCase() || "";
+    setFilteredFavCards(
+      favCards.filter((card) =>
+        card.title.toLowerCase().includes(q) ||
+        card.subtitle.toLowerCase().includes(q) ||
+        card.description.toLowerCase().includes(q)
+      )
+    );
+  }, [searchParams, favCards]);
+
 
   const handleToggleLike = useCallback(async (cardId) => {
     try {
@@ -52,6 +68,7 @@ function FavoriteCardsPage() {
       const updatedCard = response.data;
       if (!updatedCard.likes.includes(user?._id)) {
         setFavCards((prev) => prev.filter(card => card._id !== updatedCard._id));
+        setFilteredFavCards((prev) => prev.filter(card => card._id !== updatedCard._id));
         setSnack("info", "Card removed from favorites.");
       } else {
         setSnack("success", "Card added to favorites.");
@@ -69,7 +86,7 @@ function FavoriteCardsPage() {
         description="View and manage the cards you have liked."
       />
       <BCards
-        cards={favCards}
+        cards={filteredFavCards}
         setCards={setFavCards}
         onToggleLike={handleToggleLike}
         user={user}
