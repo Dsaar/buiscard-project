@@ -1,7 +1,7 @@
 import { TextField, Grid, Box } from "@mui/material";
 import Form from "../../../components/Form";
 
-function EditUserFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,onReset }) {
+function EditUserFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,onReset,isFormValid }) {
 	return (
 		<Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: "100vh", py: 4 }}>
 			<Form onSubmit={handleSubmit} onReset={onReset} title="Edit Profile" isFormValid={isFormValid}>
