@@ -9,20 +9,27 @@ import {
 	Divider,
 	CircularProgress,
 	Button,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	DialogActions,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import PublicIcon from '@mui/icons-material/Public';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import HomeIcon from '@mui/icons-material/Home';
+import LanguageIcon from '@mui/icons-material/Language';
+import BusinessIcon from '@mui/icons-material/Business';
+import InfoIcon from '@mui/icons-material/Info';
 import ENDPOINTS from '../api/endpoints';
 import { getToken } from '../users/services/localStorageService';
 import { useSnack } from '../providers/SnackBarProvider';
 import { useCurrentUser } from '../users/providers/UserProvider';
+
+// Components
+import InfoRow from '../components/common/InfoRow';
+import DeleteConfirmationDialog from '../components/common/DeleteConfirmationDialog';
 
 function CardDetailsPage() {
 	const { id } = useParams();
@@ -83,132 +90,112 @@ function CardDetailsPage() {
 	}
 
 	return (
-		<Box
-			sx={{
-				p: 3,
-				minHeight: '100vh',
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
-		>
-			{/* Top Buttons */}
-			<Box
-				sx={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					width: '100%',
-					maxWidth: '1000px',
-					mb: 2,
-				}}
-			>
-				<Button
-					variant="outlined"
-					startIcon={<ArrowBackIcon />}
-					onClick={() => navigate('/')}
-				>
-					Back to Cards
-				</Button>
-				{isOwner && (
-					<Box>
-						<Button
-							variant="contained"
-							color="primary"
-							sx={{ mr: 1 }}
-							startIcon={<EditIcon />}
-							onClick={() => navigate(`/edit-card/${id}`)}
-						>
-							Edit
-						</Button>
-						<Button
-							variant="outlined"
-							color="error"
-							startIcon={<DeleteIcon />}
-							onClick={() => setDeleteDialogOpen(true)}
-						>
-							Delete
-						</Button>
-					</Box>
-				)}
-			</Box>
+		<Box sx={{ p: 3, minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+			<Paper elevation={4} sx={{ p: 4, borderRadius: 3, maxWidth: '900px', width: '100%' }}>
+				{/* Header Buttons */}
+				<Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+					<Button variant="outlined" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+						Back to Cards
+					</Button>
+					{isOwner && (
+						<Box>
+							<Button
+								variant="contained"
+								color="primary"
+								sx={{ mr: 1 }}
+								startIcon={<EditIcon />}
+								onClick={() => navigate(`/edit-card/${id}`)}
+							>
+								Edit
+							</Button>
+							<Button
+								variant="outlined"
+								color="error"
+								startIcon={<DeleteIcon />}
+								onClick={() => setDeleteDialogOpen(true)}
+							>
+								Delete
+							</Button>
+						</Box>
+					)}
+				</Box>
 
-			{/* Main Card */}
-			<Paper elevation={4} sx={{ p: 4, borderRadius: 3, maxWidth: '1000px', width: '100%' }}>
+				{/* Title */}
 				<Typography variant="h4" align="center" gutterBottom>
 					{card.title}
 				</Typography>
-
 				<Typography variant="subtitle1" align="center" color="text.secondary" gutterBottom>
 					{card.subtitle}
 				</Typography>
-
 				<Divider sx={{ my: 3 }} />
 
-				<Grid container spacing={3}>
+				{/* Card Image on Top */}
+				<Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+					<Box
+						component="img"
+						src={card.image?.url}
+						alt={card.image?.alt || "Card image"}
+						sx={{
+							borderRadius: 2,
+							boxShadow: 3,
+							objectFit: "cover",
+							maxHeight: 300,
+							maxWidth: "100%",
+						}}
+					/>
+				</Box>
+
+				{/* Details Layout */}
+				<Grid container spacing={4}>
+					{/* Contact Info */}
 					<Grid item xs={12} md={6}>
-						<Typography variant="h6" gutterBottom>
-							Contact Info
+						<Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+							Contact Information
 						</Typography>
-						<Typography><b>Phone:</b> {card.phone}</Typography>
-						<Typography><b>Email:</b> {card.email}</Typography>
-						<Typography><b>Website:</b> {card.web}</Typography>
+						<InfoRow icon={<PhoneIcon />} label="Phone" value={card.phone} width={'250px'} />
+						<InfoRow icon={<EmailIcon />} label="Email" value={card.email} fullWidth />
+						<InfoRow icon={<LanguageIcon />} label="Website" value={card.web} fullWidth />
 					</Grid>
 
+					{/* Address Info */}
 					<Grid item xs={12} md={6}>
-						<Typography variant="h6" gutterBottom>
+						<Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
 							Address
 						</Typography>
-						<Typography><b>Street:</b> {card.address?.street}</Typography>
-						<Typography><b>City:</b> {card.address?.city}</Typography>
-						<Typography><b>Country:</b> {card.address?.country}</Typography>
-						<Typography><b>Zip:</b> {card.address?.zip}</Typography>
+						<InfoRow icon={<HomeIcon />} label="Street" value={card.address?.street} width={'250px'} />
+						<InfoRow icon={<LocationCityIcon />} label="City" value={card.address?.city} fullWidth />
+						<InfoRow icon={<PublicIcon />} label="Country" value={card.address?.country} fullWidth />
+						<InfoRow icon={<BusinessIcon />} label="Zip Code" value={card.address?.zip} fullWidth />
 					</Grid>
 
-					<Grid item xs={12} md={6}>
-						<Typography variant="h6" gutterBottom>
-							Business Info
+					{/* Business Info */}
+					<Grid item xs={12}>
+						<Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+							Business Details
 						</Typography>
-						<Typography><b>Business Number:</b> {card.bizNumber}</Typography>
-						<Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-							<FavoriteIcon color="error" sx={{ mr: 1 }} />
-							<Typography>{card.likes?.length || 0} Likes</Typography>
-						</Box>
-						<Typography sx={{ mt: 2 }}><b>Description:</b> {card.description}</Typography>
-					</Grid>
-
-					<Grid item xs={12} md={6}>
-						<Box
-							component="img"
-							src={card.image?.url}
-							alt={card.image?.alt || 'Card image'}
-							sx={{
-								width: '100%',
-								borderRadius: 2,
-								boxShadow: 3,
-								objectFit: 'cover',
-								maxHeight: 300,
-							}}
+						<InfoRow icon={<BusinessIcon />} label="Business Number" value={card.bizNumber} width={'250px'} />
+						<InfoRow
+							icon={<FavoriteIcon color="error" />}
+							label="Likes"
+							value={`${card.likes?.length || 0} Likes`}
+							fullWidth
+						/>
+						<InfoRow
+							icon={<InfoIcon />}
+							label="Description"
+							value={card.description || 'No description provided.'}
+							fullWidth
 						/>
 					</Grid>
 				</Grid>
 			</Paper>
 
 			{/* Delete Confirmation Dialog */}
-			<Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-				<DialogTitle>Delete this card?</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						Are you sure you want to delete this card? This action cannot be undone.
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
-					<Button onClick={handleDelete} color="error" autoFocus>
-						Delete
-					</Button>
-				</DialogActions>
-			</Dialog>
+			<DeleteConfirmationDialog
+				open={deleteDialogOpen}
+				onClose={() => setDeleteDialogOpen(false)}
+				onConfirm={handleDelete}
+			/>
 		</Box>
 	);
 }

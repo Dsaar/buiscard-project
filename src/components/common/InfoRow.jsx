@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-export default function InfoRow({ icon, label, value }) {
+export default function InfoRow({ icon, label, value,width }) {
 	const theme = useTheme();
 
 	return (
@@ -13,7 +13,7 @@ export default function InfoRow({ icon, label, value }) {
 				p: 2,
 				borderRadius: 2,
 				mb: 2,
-				width: '100%',
+				width: width || '100%',
 				border: `1px solid ${theme.palette.divider}`
 			}}
 		>
