@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import Form from "../../../components/Form";
 
-function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,isFormValid }) {
+function RegisterFormMobile({ fields, formDetails, errors, handleChange, handleSubmit,isFormValid,onReset }) {
 	return (
 		<Box
 			sx={{
