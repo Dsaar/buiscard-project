@@ -161,7 +161,6 @@ function CRMUsers() {
 					},
 				}}
 				pageSizeOptions={[5, 10, 20]}
-				checkboxSelection
 				disableRowSelectionOnClick
 			/>
 		</Box>
