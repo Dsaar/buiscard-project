@@ -12,11 +12,13 @@ import { useSearchParams } from "react-router-dom";
 function FavoriteCardsPage() {
   const [favCards, setFavCards] = useState([]);
   const [filteredFavCards, setFilteredFavCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useCurrentUser();
   const setSnack = useSnack();
   const [searchParams] = useSearchParams();
 
   const fetchFavoriteCards = async () => {
+    setIsLoading(true);
     try {
       const token = getToken();
       const response = await axios.get(
@@ -34,6 +36,8 @@ function FavoriteCardsPage() {
     } catch (error) {
       console.error("Failed to fetch cards:", error);
       setSnack("error", "Failed to load favorite cards.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -90,6 +94,7 @@ function FavoriteCardsPage() {
         setCards={setFavCards}
         onToggleLike={handleToggleLike}
         user={user}
+        loading={isLoading}
       />
     </Container>
   );

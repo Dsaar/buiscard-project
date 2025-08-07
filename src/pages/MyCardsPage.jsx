@@ -12,11 +12,13 @@ import { useSearchParams } from 'react-router-dom';
 function MyCardsPage() {
   const [myCards, setMyCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const setSnack = useSnack();
   const { user } = useCurrentUser();
   const [searchParams]=useSearchParams();
 
   const fetchMyCards = async () => {
+    setIsLoading(true);
     try {
       const token = getToken();
       const response = await axios.get(
@@ -29,6 +31,8 @@ function MyCardsPage() {
     } catch (err) {
       console.error('Failed to load your cards', err);
       setSnack("error", "Failed to load your cards.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -86,6 +90,7 @@ function MyCardsPage() {
         setCards={setMyCards}
         onToggleLike={handleToggleLike}
         user={user}
+        loading={isLoading}
       />
     </Container>
   );

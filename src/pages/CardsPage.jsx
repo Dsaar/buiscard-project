@@ -15,11 +15,13 @@ import PageHeader from '../components/PageHeader';
 function CardsPage() {
   const [cards, setCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const setSnack = useSnack();
   const [searchParams] = useSearchParams();
   const { user } = useCurrentUser();
 
   const getCardsFromServer = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         ENDPOINTS.cards.all
@@ -30,6 +32,8 @@ function CardsPage() {
     } catch (error) {
       console.error("Failed to fetch cards:", error);
       setSnack('error', "Failed to load cards");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -91,6 +95,8 @@ function CardsPage() {
         setCards={setCards}
         onToggleLike={handleToggleLike}
         user={user}
+        loading={isLoading}
+
       />
       {user && <AddNewItemButton to={ROUTES.createCard} text="Create" />}
     </Container>
