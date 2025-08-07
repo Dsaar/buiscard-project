@@ -41,9 +41,9 @@ function LoginForm() {
 			const newAttempts = failedAttempts + 1;
 			localStorage.setItem("failedLoginAttempts", newAttempts);
 			if (newAttempts >= 3) {
-				const lockUntil = Date.now() + 15 * 60 * 1000;
+				const lockUntil = Date.now() + 24 * 60 * 60 * 1000;
 				localStorage.setItem("loginLockedUntil", lockUntil);
-				setSnack("error", "Too many failed attempts. You are locked out for 15 minutes.");
+				setSnack("error", "Too many failed attempts. You are locked out for 24 hours.");
 			} else {
 				setSnack("error", `Login failed. You have ${3 - newAttempts} attempt(s) left.`);
 			}
