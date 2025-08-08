@@ -59,7 +59,7 @@ npm install
 
 ### Configure Environment Variables
 Create a .env file in the root directory and add:
-```bash
+```
 VITE_API_BASE_URL=https://monkfish-app-z9uza.ondigitalocean.app/bcard2
 ```
 
