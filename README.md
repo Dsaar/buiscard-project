@@ -7,7 +7,7 @@ The platform includes dedicated features for regular users, business users, and 
 ---
 
 ## Project Contents 
-
+```
 src/
 ├── api/ # API endpoint definitions
 ├── cards/ # Components, pages, and services for managing cards
@@ -18,7 +18,7 @@ src/
 ├── users/ # Authentication, user profile, and services
 └── hooks/ # Custom React hooks
 ---
-
+```
 
 ## Functionalities
 
@@ -59,7 +59,9 @@ npm install
 
 ### Configure Environment Variables
 Create a .env file in the root directory and add:
+```bash
 VITE_API_BASE_URL=https://monkfish-app-z9uza.ondigitalocean.app/bcard2
+```
 
 ###  Start the Development Server
 
